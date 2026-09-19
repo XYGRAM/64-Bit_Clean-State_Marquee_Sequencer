@@ -33,7 +33,12 @@ jobs:
           pip install -r tt/requirements.txt
 
       - name: Fetch the truth table
-        run: ./tt/tt_tool.py --create-user-config
+        run: |
+          ./tt/tt_tool.py --create-user-config
+          test -f test/truthtable.md || {
+            echo "::error::test/truthtable.md was not generated"
+            exit 1
+          }
 
       - name: Check for truth table existence
         id: check_files
@@ -42,25 +47,27 @@ jobs:
           files: "test/truthtable.md"
 
       - name: Run tests
+        id: run_tests
         if: steps.check_files.outputs.files_exists == 'true'
+        working-directory: test
         run: |
-          cd test
           make clean
           make
           # make will return success even if the test fails, so check for failure in the results.xml
-          ! grep failure results.xml
+          ! grep -q failure results.xml
 
       - name: Test Summary
+        if: always() && steps.check_files.outputs.files_exists == 'true'
         uses: test-summary/action@v2.4
         with:
           paths: "test/results.xml"
-        if: always()
 
       - name: upload vcd
-        if: success() || failure()
+        if: always() && steps.check_files.outputs.files_exists == 'true'
         uses: actions/upload-artifact@v7
         with:
           name: test-vcd
+          if-no-files-found: ignore
           path: |
             test/*.vcd
             test/results.xml
