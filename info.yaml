@@ -5,7 +5,7 @@ project:
   author:       "XYGram"      # Your name
   discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
   description:  "Takes in dynamic input and throw the output in a form of light, based on the input pattern made."      # One line description of what your project does
-  language:     "Wokwi" # other examples include SystemVerilog, Amaranth, VHDL, etc
+  language:     "Verilog" # Build the checked-in synthesizable top-level module
   clock_hz:     0       # Clock frequency in Hz (or 0 if not applicable)
 
   # How many tiles your design occupies? A single tile is about 167x108 uM.
