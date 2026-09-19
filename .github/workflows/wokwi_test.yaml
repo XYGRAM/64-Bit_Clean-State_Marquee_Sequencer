@@ -42,6 +42,7 @@ jobs:
           files: "test/truthtable.md"
 
       - name: Run tests
+        id: run_tests
         if: steps.check_files.outputs.files_exists == 'true'
         run: |
           cd test
@@ -54,10 +55,10 @@ jobs:
         uses: test-summary/action@v2.4
         with:
           paths: "test/results.xml"
-        if: always()
+        if: always() && steps.check_files.outputs.files_exists == 'true'
 
       - name: upload vcd
-        if: success() || failure()
+        if: always() && steps.check_files.outputs.files_exists == 'true'
         uses: actions/upload-artifact@v7
         with:
           name: test-vcd
