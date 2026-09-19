@@ -5,7 +5,7 @@ project:
   author:       "XYGram"      # Your name
   discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
   description:  "Takes in dynamic input and throw the output in a form of light, based on the input pattern made."      # One line description of what your project does
-  language:     "Wokwi" # Build the checked-in synthesizable top-level module
+  language:     "Verilog" # Build the checked-in synthesizable top-level module
   top_module:   "tt_um_wokwi_475558298046068737"
   source_files:
     - project.v
